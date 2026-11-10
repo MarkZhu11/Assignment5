@@ -1,0 +1,183 @@
+Question 1
+
+Output:
+availableContainers
+-------------------
+100
+
+Explanation:
+This query selects the inventory row for the bottle of antibiotics and adds its quantity on hand. So the result is the number of antibiotic containers currently available.
+
+
+Question 2
+
+Output:
+volunteerName
+-------------
+Gene Lewin
+
+Explanation:
+This query keeps volunteers who have a telephone number that does not begin with 2. It also excludes names ending in the last name Jones, and returns only the volunteer's name.
+
+
+Question 3
+
+Output:
+volunteerName
+--------------
+George Brewer
+
+Explanation:
+The joins connect each volunteer to an assignment, the assigned task, and that task's type. The query keeps transporting tasks and uses DISTINCT so a volunteer would appear only once even if assigned to more than one such task.
+
+
+Question 4
+
+Output:
+taskDescription
+------------------------------
+Prepare 100 food packages
+Take packages to the warehouse
+
+Explanation:
+The LEFT JOIN retains every task even when it has no matching assignment. Rows whose joined volunteer ID is NULL are the unassigned tasks, and the query returns their descriptions.
+
+
+Question 5
+
+Output:
+packageTypeName
+---------------
+food and water
+
+Explanation:
+This query follows each package type to its packages, package contents, and items. It keeps items whose descriptions contain "bottle" and uses DISTINCT so each qualifying package type appears once.
+
+
+Question 6
+
+Output:
+itemDescription
+---------------------
+bottle of antibiotics
+bottle of aspirin
+flashlight
+pack of bandages
+
+Explanation:
+For each item, the NOT EXISTS condition checks whether any package-contents row uses the same item ID. An item is returned only when no such row exists, so the output contains items that are in no package.
+
+
+Question 7
+
+Output:
+taskDescription
+------------------------------
+Prepare 20 children's packages
+Prepare 100 water packages
+Prepare 5,000 packages
+
+Explanation:
+The query joins tasks to their assignments and assigned volunteers, then keeps volunteer addresses ending in NJ. DISTINCT removes repeated task descriptions when the same task has multiple New Jersey volunteers or separate qualifying tasks share a description.
+
+
+Question 8
+
+Output:
+volunteerName
+-------------
+Joan Simmons
+Chris Jordan
+
+Explanation:
+This query joins volunteers to their assignments and checks each assignment's starting time. Dates on or after January 1 and before July 1, 2021 cover the complete first half of the year, and DISTINCT prevents a volunteer from appearing more than once.
+
+
+Question 9
+
+Output:
+volunteerName
+-------------
+Julie White
+Gerry Banks
+
+Explanation:
+The joins trace spam from an item through package contents and packages to the packing task that created them. That task is then connected through assignments to its volunteers, and DISTINCT returns each qualifying volunteer once.
+
+
+Question 10
+
+Output:
+itemDescription
+---------------
+Baby formula
+
+Explanation:
+Each package-contents row gives the quantity of one item in one package. Multiplying that quantity by the item's value gives out the value of the product, and the query returns distinct item descriptions when the product is exactly $100.
+
+
+Question 11
+
+Output:
+taskStatusName  volunteerCount
+--------------  --------------
+open            4
+closed          3
+ongoing         2
+pending         1
+
+Explanation:
+The LEFT JOINs connect every task status to its tasks and their assignments, but still allows no volunteers to have a zero count. COUNT(DISTINCT volunteerId) counts each volunteer only once within a status, and the results are sorted from the largest count to the smallest.
+
+
+Question 12
+
+Output:
+taskCode  weight
+--------  ------
+106       308.0
+
+Explanation:
+This query groups packages by the task that created them and sums the stored package weights for each task. It sorts the totals from heaviest to lightest and keeps the first row, using direct joins and aggregation without a subquery.
+
+
+Question 13
+
+Output:
+nonPackingTaskCount
+-------------------
+3
+
+Explanation:
+The query joins every task to its task type and excludes rows whose type name is packing. COUNT(*) then reports how many recurring or transporting tasks remain.
+
+
+Question 14
+
+Output:
+itemDescription
+---------------------
+can of spam
+dried fruit
+tent
+men's coat
+women's coat
+sleeping bag
+
+Explanation:
+The joins connect each packed item to its package, the packing task that created the package, and volunteers assigned to that task. The query groups by item and keeps only groups touched by fewer than three distinct volunteers; the LEFT JOIN also preserves a packed item if its task had no volunteers.
+
+
+Question 15
+
+Output:
+packageId  totalValue
+---------  ----------
+6          150.0
+2          151.0
+4          350.0
+10         750.0
+5          1420.0
+
+Explanation:
+For each package, the query multiplies every item's unit value by its quantity and sums those line values. HAVING keeps package totals greater than $100, and ORDER BY lists the qualifying packages from the lowest total value to the highest.
